@@ -58,9 +58,13 @@
 
 	var _App2 = _interopRequireDefault(_App);
 
+	var _data = __webpack_require__(161);
+
+	var _data2 = _interopRequireDefault(_data);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	_reactDom2.default.render(_react2.default.createElement(_App2.default, null), document.getElementById('app'));
+	_reactDom2.default.render(_react2.default.createElement(_App2.default, { donuts: _data2.default }), document.getElementById('app'));
 
 /***/ },
 /* 1 */
@@ -19772,6 +19776,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _DonutDisplay = __webpack_require__(160);
+
+	var _DonutDisplay2 = _interopRequireDefault(_DonutDisplay);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -19788,17 +19796,40 @@
 
 	    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
-	    _this.state = {};
+	    _this.state = {
+	      bestDonutId: 1
+	    };
+	    _this.chooseBestDonut = _this.chooseBestDonut.bind(_this);
 	    return _this;
 	  }
 
 	  _createClass(App, [{
+	    key: 'chooseBestDonut',
+	    value: function chooseBestDonut(id) {
+	      this.setState({ bestDonutId: id });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this2 = this;
+
+	      var donuts = this.props.donuts.foods.map(function (donut) {
+	        var chooseBestDonut = function chooseBestDonut() {
+	          _this2.chooseBestDonut(donut.id);
+	        };
+	        return _react2.default.createElement(_DonutDisplay2.default, {
+	          key: donut.id,
+	          id: donut.id,
+	          name: donut.name,
+	          imgUrl: donut.imgUrl,
+	          bestDonut: _this2.state.bestDonutId,
+	          chooseBestDonut: chooseBestDonut
+	        });
+	      });
 	      return _react2.default.createElement(
-	        'h1',
+	        'div',
 	        null,
-	        'BOILERPLATE !'
+	        donuts
 	      );
 	    }
 	  }]);
@@ -19807,6 +19838,90 @@
 	}(_react.Component);
 
 	exports.default = App;
+
+/***/ },
+/* 160 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var DonutDisplay = function (_Component) {
+	  _inherits(DonutDisplay, _Component);
+
+	  function DonutDisplay(props) {
+	    _classCallCheck(this, DonutDisplay);
+
+	    return _possibleConstructorReturn(this, (DonutDisplay.__proto__ || Object.getPrototypeOf(DonutDisplay)).call(this, props));
+	  }
+
+	  _createClass(DonutDisplay, [{
+	    key: "render",
+	    value: function render() {
+	      var delicious = void 0;
+	      if (this.props.bestDonut === this.props.id) {
+	        delicious = "yummy";
+	      }
+	      return _react2.default.createElement(
+	        "h1",
+	        { onClick: this.props.chooseBestDonut, className: delicious },
+	        this.props.name,
+	        this.props.imgUrl
+	      );
+	    }
+	  }]);
+
+	  return DonutDisplay;
+	}(_react.Component);
+
+	exports.default = DonutDisplay;
+
+/***/ },
+/* 161 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var data = {
+	  foods: [{
+	    id: 1,
+	    name: "Double Chocolate",
+	    delicious: true,
+	    imgUrl: "http://www.yourchampionshipcompany.com/wp-content/uploads/2014/01/DD_DoubleChocolate.jpg"
+	  }, {
+	    id: 2,
+	    name: "Chocolate Frosted",
+	    delicious: false,
+	    imgUrl: "https://upload.wikimedia.org/wikipedia/commons/a/ae/Dunkin-Donuts-Chocolate-Glazed.jpg"
+	  }, {
+	    id: 3,
+	    name: "Chocolate Frosted with Sprinkles",
+	    delicious: true,
+	    imgUrl: "https://img.buzzfeed.com/buzzfeed-static/static/2015-02/24/13/enhanced/webdr05/enhanced-buzz-1864-1424801781-9.jpg"
+	  }]
+	};
+
+	exports.default = data;
 
 /***/ }
 /******/ ]);
